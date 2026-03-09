@@ -5,10 +5,9 @@ import { RouterLink } from '@angular/router';
   selector: 'app-home',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  template: `
+    <h1>Welcome to My Store!</h1>
+    <a [routerLink]="['/products']" class="btn btn-primary mt-3">View Products</a>
+  `
 })
-
-export class HomeComponent {
-
-}
+export class HomeComponent {}

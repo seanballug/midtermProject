@@ -1,16 +1,10 @@
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Product } from '../models/product.interface';
 
-@Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-export class ProductsComponent {
-
-  showModal = false;
-
-  selectedProduct: Product | null = null;
+export class ProductService {
 
   products: Product[] = [
 
@@ -144,19 +138,25 @@ export class ProductsComponent {
       rating:4.0
     }
 
+
   ];
 
-  viewProductDetails(product: Product){
+  constructor() {}
 
-    this.selectedProduct = product;
-    this.showModal = true;
-
+  getProducts(): Product[] {
+    return this.products;
   }
-
-  closeModal(){
-
-    this.showModal = false;
-
+  getProductById(id: number): Product | undefined {
+    return this.products.find(e =>e.id === id);
   }
+  updateProduct(updated: Product): void{
+    const idx = this.products.findIndex(e => e.id === updated.id);
+    if (idx !== -1) this.products[idx] = {... updated};
+  }
+  isAuthenticated(): boolean{
+    return !!sessionStorage.getItem('auth_token');
+  }
+  login():void {sessionStorage.setItem('auth_token', 'demo-token');}
+  logout():void {sessionStorage.removeItem('auth_token');}
 
 }
